@@ -1,5 +1,8 @@
-import React from 'react';
-import { registerUser } from '../api/registerUser';
+import React from "react";
+import { registerUser } from "../api/registerUser";
+import { Button } from "../styles/Button.styled";
+import { Form } from "../styles/Form.styled";
+import { Input } from "../styles/Input.styled";
 
 interface RegisterFormProps {
   username: string;
@@ -7,6 +10,8 @@ interface RegisterFormProps {
   password: string;
   age: number;
   gender: string;
+  isLoggedIn: boolean;
+  isRegistering: boolean;
   handleUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +21,8 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm = ({
+  isLoggedIn,
+  isRegistering,
   username,
   email,
   password,
@@ -37,39 +44,44 @@ export const RegisterForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <label htmlFor="username">Username</label>
-      <input
+      <Input
         type="text"
         id="username"
         onChange={handleUsernameChange}
         value={username}
       />
       <label htmlFor="email">Email</label>
-      <input
+      <Input
         type="email"
         id="email"
         onChange={handleEmailChange}
         value={email}
       />
       <label htmlFor="password">Password</label>
-      <input
+      <Input
         type="password"
         id="password"
         onChange={handlePasswordChange}
         value={password}
       />
       <label htmlFor="age">Age</label>
-      <input type="number" id="age" onChange={handleAgeChange} value={age} />
+      <Input type="number" id="age" onChange={handleAgeChange} value={age} />
       <label htmlFor="gender">Gender</label>
-      <input
+      <Input
         type="text"
         id="gender"
         onChange={handleGenderChange}
         value={gender}
       />
 
-      <button type="submit">Register</button>
-    </form>
+      <Button type="submit">Register</Button>
+      {!isLoggedIn && (
+        <Button type="button" onClick={handleRegisterClick}>
+          {!isRegistering ? "Register" : "Back to Login"}
+        </Button>
+      )}
+    </Form>
   );
 };

@@ -1,0 +1,28 @@
+import styled from "styled-components";
+
+export const Button = styled.button`
+  background: rgb(253, 162, 193);
+  background: linear-gradient(
+    90deg,
+    rgba(253, 162, 193, 1) 0%,
+    rgba(133, 123, 252, 1) 100%
+  );
+  border: none;
+  color: white;
+  padding: 5px 20px;
+  max-height: 35px;
+  border-radius: 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  &:active {
+    filter: brightness(0.9);
+    transform: scale(0.9);
+  }
+  &:hover {
+    filter: brightness(1.1);
+  }
+`;

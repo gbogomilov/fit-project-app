@@ -1,14 +1,18 @@
-'use client';
-import React, { useState } from 'react';
-import { LoginForm } from '../components/LoginForm';
-import { RegisterForm } from '../components/RegisterForm';
+"use client";
+import React, { useContext, useState } from "react";
+import { LoginForm } from "../components/LoginForm";
+import { RegisterForm } from "../components/RegisterForm";
+import { Button } from "../styles/Button.styled";
+import styled from "styled-components";
+import { UserContext } from "../context/UserProvider";
 
 export const LandingContainer = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { user, setUser } = useContext(UserContext);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [age, setAge] = useState(0);
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -30,6 +34,7 @@ export const LandingContainer = () => {
 
   const handleLogin = () => {
     setIsLoggedIn(true);
+    setUser({ name: username, email: email });
   };
 
   const handleLogout = () => {
@@ -42,9 +47,20 @@ export const LandingContainer = () => {
 
   return (
     <>
-      <h1>Fit App</h1>
+      <Header>
+        Fit App &nbsp;
+        {user && `Welcome! ${user.name}`}
+        {isLoggedIn && (
+          <Button type="button" onClick={handleLogout}>
+            logout
+          </Button>
+        )}
+      </Header>
       {!isRegistering && !isLoggedIn && (
         <LoginForm
+          isLoggedIn={isLoggedIn}
+          isRegistering={isRegistering}
+          handleRegisterClick={handleRegisterClick}
           username={username}
           password={password}
           handleUsernameChange={handleUsernameChange}
@@ -54,6 +70,8 @@ export const LandingContainer = () => {
       )}
       {isRegistering && (
         <RegisterForm
+          isLoggedIn={isLoggedIn}
+          isRegistering={isRegistering}
           username={username}
           email={email}
           password={password}
@@ -67,16 +85,17 @@ export const LandingContainer = () => {
           handleRegisterClick={handleRegisterClick}
         />
       )}
-      {!isLoggedIn && (
-        <button type="button" onClick={handleRegisterClick}>
-          {!isRegistering ? 'Register' : 'Back to Login'}
-        </button>
-      )}
-      {isLoggedIn && (
-        <button type="button" onClick={handleLogout}>
-          logout
-        </button>
-      )}
     </>
   );
 };
+
+const Header = styled.h1`
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  button {
+    position: relative;
+    top: 0.5rem;
+  }
+`;

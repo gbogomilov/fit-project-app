@@ -1,0 +1,11 @@
+import styled from "styled-components";
+
+export const Input = styled.input`
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+`;
