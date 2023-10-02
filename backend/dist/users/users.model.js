@@ -21,6 +21,10 @@ __decorate([
 ], User.prototype, "name", void 0);
 __decorate([
     (0, mongoose_2.Prop)(),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
+    (0, mongoose_2.Prop)(),
     __metadata("design:type", Number)
 ], User.prototype, "age", void 0);
 __decorate([

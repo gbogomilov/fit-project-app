@@ -2,9 +2,9 @@
 import React, { useContext, useState } from "react";
 import { LoginForm } from "../components/LoginForm";
 import { RegisterForm } from "../components/RegisterForm";
-import { Button } from "../styles/Button.styled";
-import styled from "styled-components";
+import buttonstyle from "../styles/button.module.css";
 import { UserContext } from "../context/UserProvider";
+import headerStyles from "./styles/LandingContainer.module.css";
 
 export const LandingContainer = () => {
   const { user, setUser } = useContext(UserContext);
@@ -14,7 +14,7 @@ export const LandingContainer = () => {
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(user ? true : false);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -32,13 +32,32 @@ export const LandingContainer = () => {
     setGender(e.target.value);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (userName: string, token: string) => {
     setIsLoggedIn(true);
-    setUser({ name: username, email: email });
+    setUser({ name: userName, email: email, token });
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    const autoLogin = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch("http://localhost:3001/logout", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    };
+    autoLogin();
   };
 
   const handleRegisterClick = () => {
@@ -47,23 +66,27 @@ export const LandingContainer = () => {
 
   return (
     <>
-      <Header>
+      <h1 className={headerStyles.header}>
         Fit App &nbsp;
         {user && `Welcome! ${user.name}`}
         {isLoggedIn && (
-          <Button type="button" onClick={handleLogout}>
+          <button
+            className={buttonstyle.styledbutton}
+            type="button"
+            onClick={handleLogout}
+          >
             logout
-          </Button>
+          </button>
         )}
-      </Header>
+      </h1>
       {!isRegistering && !isLoggedIn && (
         <LoginForm
           isLoggedIn={isLoggedIn}
           isRegistering={isRegistering}
           handleRegisterClick={handleRegisterClick}
-          username={username}
+          email={email}
           password={password}
-          handleUsernameChange={handleUsernameChange}
+          handleEmailChange={handleEmailChange}
           handlePasswordChange={handlePasswordChange}
           handleLogin={handleLogin}
         />
@@ -88,14 +111,3 @@ export const LandingContainer = () => {
     </>
   );
 };
-
-const Header = styled.h1`
-  display: flex;
-  justify-content: space-between;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  button {
-    position: relative;
-    top: 0.5rem;
-  }
-`;

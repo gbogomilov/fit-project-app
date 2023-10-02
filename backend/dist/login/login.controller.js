@@ -22,6 +22,10 @@ let LoginController = class LoginController {
     async login(userData) {
         return await this.loginService.login(userData);
     }
+    async autoLogin(authorization) {
+        console.log(authorization);
+        return await this.loginService.autoLogin(authorization);
+    }
 };
 exports.LoginController = LoginController;
 __decorate([
@@ -31,8 +35,15 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], LoginController.prototype, "login", null);
+__decorate([
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Headers)("authorization")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], LoginController.prototype, "autoLogin", null);
 exports.LoginController = LoginController = __decorate([
-    (0, common_1.Controller)('login'),
+    (0, common_1.Controller)("login"),
     __metadata("design:paramtypes", [login_service_1.LoginService])
 ], LoginController);
 //# sourceMappingURL=login.controller.js.map

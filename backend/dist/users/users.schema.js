@@ -4,6 +4,7 @@ exports.UserSchema = void 0;
 const mongoose = require("mongoose");
 exports.UserSchema = new mongoose.Schema({
     name: String,
+    email: String,
     age: Number,
     gender: String,
     password: String,

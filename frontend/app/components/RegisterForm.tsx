@@ -1,8 +1,8 @@
 import React from "react";
 import { registerUser } from "../api/registerUser";
-import { Button } from "../styles/Button.styled";
-import { Form } from "../styles/Form.styled";
-import { Input } from "../styles/Input.styled";
+import buttonstyle from "../styles/button.module.css";
+import formstyle from "../styles/form.module.css";
+import inputstyle from "../styles/input.module.css";
 
 interface RegisterFormProps {
   username: string;
@@ -44,44 +44,60 @@ export const RegisterForm = ({
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <form className={formstyle.styledform} onSubmit={handleSubmit}>
       <label htmlFor="username">Username</label>
-      <Input
+      <input
+        className={inputstyle.styledinput}
         type="text"
         id="username"
         onChange={handleUsernameChange}
         value={username}
       />
       <label htmlFor="email">Email</label>
-      <Input
+      <input
+        className={inputstyle.styledinput}
         type="email"
         id="email"
         onChange={handleEmailChange}
         value={email}
       />
       <label htmlFor="password">Password</label>
-      <Input
+      <input
+        className={inputstyle.styledinput}
         type="password"
         id="password"
         onChange={handlePasswordChange}
         value={password}
       />
       <label htmlFor="age">Age</label>
-      <Input type="number" id="age" onChange={handleAgeChange} value={age} />
+      <input
+        className={inputstyle.styledinput}
+        type="number"
+        id="age"
+        onChange={handleAgeChange}
+        value={age}
+      />
       <label htmlFor="gender">Gender</label>
-      <Input
+      <input
+        className={inputstyle.styledinput}
         type="text"
         id="gender"
         onChange={handleGenderChange}
         value={gender}
       />
 
-      <Button type="submit">Register</Button>
+      <button className={buttonstyle.styledbutton} type="submit">
+        Register
+      </button>
       {!isLoggedIn && (
-        <Button type="button" onClick={handleRegisterClick}>
+        <button
+          className={buttonstyle.styledbutton}
+          type="button"
+          onClick={handleRegisterClick}
+        >
           {!isRegistering ? "Register" : "Back to Login"}
-        </Button>
+        </button>
       )}
-    </Form>
+    </form>
   );
 };

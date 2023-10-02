@@ -22,9 +22,10 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Document } from 'mongoose';
+import { Document } from "mongoose";
 export declare class User extends Document {
     name: string;
+    email: string;
     age: number;
     gender: string;
     password: string;

@@ -1,8 +1,6 @@
 import "./styles/globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import { ServerStyleSheet, StyleSheetManager } from "styled-components";
-import StyledComponentsRegistry from "./registry";
 
 const inter = Roboto({
   subsets: ["latin"],
@@ -21,9 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

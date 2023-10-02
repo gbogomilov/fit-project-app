@@ -16,17 +16,35 @@ const users_service_1 = require("./users/users.service");
 const users_model_1 = require("./users/users.model");
 const login_controller_1 = require("./login/login.controller");
 const login_service_1 = require("./login/login.service");
+const jwt_1 = require("@nestjs/jwt");
+const jwt_service_1 = require("./jwt/jwt.service");
+const cache_service_1 = require("./cache/cache.service");
+const autologin_controller_1 = require("./login/autologin.controller");
+const logout_controller_1 = require("./login/logout.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb+srv://gbogomilov:g5sQDSQxrREKE78j@cluster0.n35kjmi.mongodb.net/?retryWrites=true&w=majority'),
+            mongoose_1.MongooseModule.forRoot("mongodb+srv://gbogomilov:g5sQDSQxrREKE78j@cluster0.n35kjmi.mongodb.net/?retryWrites=true&w=majority"),
             mongoose_1.MongooseModule.forFeature([{ name: users_model_1.User.name, schema: users_model_1.UserSchema }]),
+            jwt_1.JwtModule.register({ secret: "hard!to-guess_secret" }),
         ],
-        controllers: [app_controller_1.AppController, users_controller_1.UsersController, login_controller_1.LoginController],
-        providers: [app_service_1.AppService, users_service_1.UsersService, login_service_1.LoginService],
+        controllers: [
+            app_controller_1.AppController,
+            users_controller_1.UsersController,
+            login_controller_1.LoginController,
+            autologin_controller_1.AutoLoginController,
+            logout_controller_1.LogoutController,
+        ],
+        providers: [
+            app_service_1.AppService,
+            users_service_1.UsersService,
+            login_service_1.LoginService,
+            jwt_service_1.JwtAuthService,
+            cache_service_1.CacheService,
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

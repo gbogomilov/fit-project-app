@@ -4,6 +4,7 @@ import React, { createContext, useState } from "react";
 interface User {
   name: string;
   email: string;
+  token: string;
 }
 
 interface UserContextValue {
@@ -13,6 +14,7 @@ interface UserContextValue {
 
 interface UserProviderProps {
   children: React.ReactNode;
+  value?: User;
 }
 
 export const UserContext = createContext<UserContextValue>({
@@ -20,9 +22,9 @@ export const UserContext = createContext<UserContextValue>({
   setUser: () => {},
 });
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
-
+export const UserProvider = ({ value, children }: UserProviderProps) => {
+  const [user, setUser] = useState<User | null>(value ? value : null);
+  console.log(user);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

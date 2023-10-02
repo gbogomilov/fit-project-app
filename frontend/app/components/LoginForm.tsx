@@ -1,63 +1,73 @@
 import React from "react";
 import { loginUser } from "../api/loginUser";
-import styled from "styled-components";
-import { Input } from "../styles/Input.styled";
-import { Button } from "../styles/Button.styled";
-import { Form } from "../styles/Form.styled";
+import buttonstyle from "../styles/button.module.css";
+import formstyle from "../styles/form.module.css";
+import inputstyle from "../styles/input.module.css";
 
 interface RegisterFormProps {
-  username: string;
+  email: string;
   password: string;
   isLoggedIn: boolean;
   isRegistering: boolean;
-  handleUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleLogin: () => void;
+  handleLogin: (userName: string, token: string) => void;
   handleRegisterClick: () => void;
 }
 
 export const LoginForm = ({
   isLoggedIn,
   isRegistering,
-  username,
+  email,
   password,
   handlePasswordChange,
-  handleUsernameChange,
+  handleEmailChange,
   handleLogin,
   handleRegisterClick,
 }: RegisterFormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { message, userName } = await loginUser(username, password);
-    if (message === "success") {
-      handleLogin();
+    const data = await loginUser(email, password);
+    console.log(data);
+    if (data.message === "success") {
+      localStorage.setItem("token", data.token);
+      handleLogin(data.userName, data.token);
+      document.cookie = `token=${data.token}`;
     } else {
-      alert(message);
+      alert(data.message);
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username</label>
-      <Input
-        type="text"
+    <form className={formstyle.styledform} onSubmit={handleSubmit}>
+      <label htmlFor="email">Email</label>
+      <input
+        className={inputstyle.styledinput}
+        type="email"
         id="username"
-        value={username}
-        onChange={handleUsernameChange}
+        value={email}
+        onChange={handleEmailChange}
       />
       <label htmlFor="password">Password</label>
-      <Input
+      <input
+        className={inputstyle.styledinput}
         type="password"
         id="password"
         value={password}
         onChange={handlePasswordChange}
       />
-      <Button type="submit">Login</Button>
+      <button className={buttonstyle.styledbutton} type="submit">
+        Login
+      </button>
       {!isLoggedIn && (
-        <Button type="button" onClick={handleRegisterClick}>
+        <button
+          className={buttonstyle.styledbutton}
+          type="button"
+          onClick={handleRegisterClick}
+        >
           {!isRegistering ? "Register" : "Back to Login"}
-        </Button>
+        </button>
       )}
-    </Form>
+    </form>
   );
 };
