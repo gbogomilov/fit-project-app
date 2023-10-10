@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LoginForm } from "../components/LoginForm";
 import { RegisterForm } from "../components/RegisterForm";
 import buttonstyle from "../styles/button.module.css";
@@ -53,6 +53,7 @@ export const LandingContainer = () => {
       } catch (err) {
         console.log(err);
       } finally {
+        document.cookie = "";
         setIsLoggedIn(false);
         setUser(null);
       }
@@ -63,6 +64,8 @@ export const LandingContainer = () => {
   const handleRegisterClick = () => {
     setIsRegistering(!isRegistering);
   };
+
+  useEffect(() => {}, [user]);
 
   return (
     <>
@@ -107,6 +110,11 @@ export const LandingContainer = () => {
           handleGenderChange={handleGenderChange}
           handleRegisterClick={handleRegisterClick}
         />
+      )}
+      {isLoggedIn && (
+        <div>
+          <h2>Dashboard</h2>
+        </div>
       )}
     </>
   );

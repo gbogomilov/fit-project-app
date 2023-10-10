@@ -23,6 +23,7 @@ export const UserContext = createContext<UserContextValue>({
 });
 
 export const UserProvider = ({ value, children }: UserProviderProps) => {
+  console.log(value);
   const [user, setUser] = useState<User | null>(value ? value : null);
   console.log(user);
   return (

@@ -31,7 +31,7 @@ export const LoginForm = ({
     console.log(data);
     if (data.message === "success") {
       localStorage.setItem("token", data.token);
-      handleLogin(data.userName, data.token);
+      handleLogin(data.name, data.token);
       document.cookie = `token=${data.token}`;
     } else {
       alert(data.message);

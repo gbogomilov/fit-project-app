@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { User } from "../users/users.model";
 import { JwtAuthService } from "src/jwt/jwt.service";
@@ -41,15 +41,11 @@ export class LoginService {
               token,
             } as unknown as User[];
           } else {
-            return {
-              message: "token expired",
-            } as unknown as User[];
+            throw new UnauthorizedException("Token Expired");
           }
         });
     } else {
-      return {
-        message: "incorrect username or password",
-      } as unknown as User[];
+      throw new UnauthorizedException("Invalid Credentials");
     }
   }
 
@@ -107,9 +103,7 @@ export class LoginService {
             token,
           } as unknown as User[];
         } else {
-          return {
-            message: "token expired",
-          } as unknown as User[];
+          throw new UnauthorizedException("Invalid Credentials");
         }
       });
   }

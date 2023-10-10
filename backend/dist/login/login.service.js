@@ -50,16 +50,12 @@ let LoginService = class LoginService {
                     };
                 }
                 else {
-                    return {
-                        message: "token expired",
-                    };
+                    throw new common_1.UnauthorizedException("Token Expired");
                 }
             });
         }
         else {
-            return {
-                message: "incorrect username or password",
-            };
+            throw new common_1.UnauthorizedException("Invalid Credentials");
         }
     }
     async logout(token) {
@@ -100,9 +96,7 @@ let LoginService = class LoginService {
                 };
             }
             else {
-                return {
-                    message: "token expired",
-                };
+                throw new common_1.UnauthorizedException("Invalid Credentials");
             }
         });
     }
