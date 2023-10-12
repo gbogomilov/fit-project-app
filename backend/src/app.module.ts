@@ -13,13 +13,18 @@ import { JwtAuthService } from "./jwt/jwt.service";
 import { CacheService } from "./cache/cache.service";
 import { AutoLoginController } from "./login/autologin.controller";
 import { LogoutController } from "./login/logout.controller";
-
+import { ExersisesController } from "./exersises/exersises.controller";
+import { ExersisesService } from "./exersises/exersises.service";
+import { Exersies, ExersiesSchema } from "./exersises/exersises.model";
 @Module({
   imports: [
     MongooseModule.forRoot(
       "mongodb+srv://gbogomilov:g5sQDSQxrREKE78j@cluster0.n35kjmi.mongodb.net/?retryWrites=true&w=majority"
     ),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Exersies.name, schema: ExersiesSchema },
+    ]),
     JwtModule.register({ secret: "hard!to-guess_secret" }),
   ],
   controllers: [
@@ -28,6 +33,7 @@ import { LogoutController } from "./login/logout.controller";
     LoginController,
     AutoLoginController,
     LogoutController,
+    ExersisesController,
   ],
   providers: [
     AppService,
@@ -35,6 +41,7 @@ import { LogoutController } from "./login/logout.controller";
     LoginService,
     JwtAuthService,
     CacheService,
+    ExersisesService,
   ],
 })
 export class AppModule {}

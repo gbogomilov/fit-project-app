@@ -21,6 +21,9 @@ const jwt_service_1 = require("./jwt/jwt.service");
 const cache_service_1 = require("./cache/cache.service");
 const autologin_controller_1 = require("./login/autologin.controller");
 const logout_controller_1 = require("./login/logout.controller");
+const exersises_controller_1 = require("./exersises/exersises.controller");
+const exersises_service_1 = require("./exersises/exersises.service");
+const exersises_model_1 = require("./exersises/exersises.model");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -28,7 +31,10 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forRoot("mongodb+srv://gbogomilov:g5sQDSQxrREKE78j@cluster0.n35kjmi.mongodb.net/?retryWrites=true&w=majority"),
-            mongoose_1.MongooseModule.forFeature([{ name: users_model_1.User.name, schema: users_model_1.UserSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: users_model_1.User.name, schema: users_model_1.UserSchema },
+                { name: exersises_model_1.Exersies.name, schema: exersises_model_1.ExersiesSchema },
+            ]),
             jwt_1.JwtModule.register({ secret: "hard!to-guess_secret" }),
         ],
         controllers: [
@@ -37,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             login_controller_1.LoginController,
             autologin_controller_1.AutoLoginController,
             logout_controller_1.LogoutController,
+            exersises_controller_1.ExersisesController,
         ],
         providers: [
             app_service_1.AppService,
@@ -44,6 +51,7 @@ exports.AppModule = AppModule = __decorate([
             login_service_1.LoginService,
             jwt_service_1.JwtAuthService,
             cache_service_1.CacheService,
+            exersises_service_1.ExersisesService,
         ],
     })
 ], AppModule);

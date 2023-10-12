@@ -5,6 +5,7 @@ import { RegisterForm } from "../components/RegisterForm";
 import buttonstyle from "../styles/button.module.css";
 import { UserContext } from "../context/UserProvider";
 import headerStyles from "./styles/LandingContainer.module.css";
+import { useGetWorkouts } from "../hooks/useGetWorkouts";
 
 export const LandingContainer = () => {
   const { user, setUser } = useContext(UserContext);
@@ -65,7 +66,7 @@ export const LandingContainer = () => {
     setIsRegistering(!isRegistering);
   };
 
-  useEffect(() => {}, [user]);
+  const { exercises, getWorkout } = useGetWorkouts();
 
   return (
     <>
@@ -113,7 +114,20 @@ export const LandingContainer = () => {
       )}
       {isLoggedIn && (
         <div>
-          <h2>Dashboard</h2>
+          {exercises.length > 0 && (
+            <h2>
+              {exercises.map((ele: any) => {
+                return (
+                  <ul className={headerStyles.workout}>
+                    <li>{ele.exercise}</li>
+                    <li>{ele.repetitions}</li>
+                    <li>{ele.sets}</li>
+                    <li>{ele.weight}</li>
+                  </ul>
+                );
+              })}
+            </h2>
+          )}
         </div>
       )}
     </>
